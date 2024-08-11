@@ -51,7 +51,7 @@ jobs:
         run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev libwayland-dev liibxkbcommon-dev
 
       - name: Populate target dir from cache
-        uses: LeafwingStudios/cargo-cache@v2
+        uses: Leafwing-Studios/cargo-cache@v2
 
       - name: Run clippy lints
         run: cargo clippy --workspace --all-targets --all-features -- --deny warnings
