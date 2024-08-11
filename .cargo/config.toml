@@ -1,0 +1,6 @@
+[env]
+RUST_MIN_STACK="33554432"
+
+[target.x86_64-pc-linux-gnu]
+linker = "clang"
+rustflags = ["-Clink-arg=-fuse-ld=lld"]
