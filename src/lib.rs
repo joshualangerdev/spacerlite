@@ -1,3 +1,5 @@
+mod screens;
+
 use bevy::{
     asset::AssetMetaCheck,
     audio::{AudioPlugin, Volume},
