@@ -1,0 +1,74 @@
+name: CI Pipe
+
+on:
+  push:
+    branch: [main]
+  pull_request:
+    branch: [main]
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: --deny warnings
+  RUSTDOCFLAGS: --deny warnings
+
+jobs:
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install dependencies
+        run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev libwayland-dev libxkbcommon-dev
+      
+      - name: Populate target dir from cache
+        uses: Leafwing-Studios/cargo-cache@v2
+
+      - name: Run tests
+        run: |
+          cargo test --workspace --all-features --all-targets
+          cargo test --workspace --all-features --doc
+
+  clippy:
+    name: Clippy
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+
+      - name: Install dependencies
+        run: sudo apt-get update; sudo apt-get install --no-install-rocmmends libasound2-dev libudev-dev libwayland-dev libxkbcommon-dev
+
+      - name: Populate target dir from cache
+        uses: Leafwin-Studios/cargo-cache@v2
+
+      - name: Run clippy linting
+        uses: cargo clippy --workspace --all-targets --all-features -- --deny warnings
+
+  format:
+    name: Formatter
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+
+      - name: Run cargo formatter
+        run: cargo fmt --all -- --check
+
