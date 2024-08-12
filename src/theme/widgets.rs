@@ -1,8 +1,4 @@
-use bevy::{
-    ecs::system::{EntityCommands, SystemId},
-    prelude::*,
-    ui::Val::*,
-};
+use bevy::{ecs::system::EntityCommands, prelude::*, ui::Val::*};
 
 pub trait Containers {
     fn ui_root(&mut self) -> EntityCommands;
