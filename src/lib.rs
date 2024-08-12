@@ -1,4 +1,6 @@
+mod assets;
 mod screens;
+mod theme;
 
 use bevy::{
     asset::AssetMetaCheck,
@@ -41,6 +43,8 @@ impl Plugin for GamePlugin {
                     ..Default::default()
                 }),
         );
+
+        app.add_plugins((screens::plugin, assets::plugin));
     }
 }
 
