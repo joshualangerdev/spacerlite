@@ -44,7 +44,7 @@ impl Plugin for GamePlugin {
                 }),
         );
 
-        app.add_plugins((screens::plugin, assets::plugin));
+        app.add_plugins((screens::plugin, theme::plugin, assets::plugin));
     }
 }
 
